@@ -3,9 +3,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from './src/screens/HomeScreen';
 import HistoryScreen from './src/screens/HistoryScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
+import SetnewGoalsScreen from './src/screens/SetNewGoalsScreen';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faHouse, faHistory, faGear } from '@fortawesome/free-solid-svg-icons';
-
+import { createStackNavigator } from '@react-navigation/stack';
 
 
 
@@ -15,6 +16,7 @@ const Tab = createBottomTabNavigator();
 export default function App(){
   return(
     <NavigationContainer>
+
       <Tab.Navigator
 
         screenOptions={({ route }) => ({

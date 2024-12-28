@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     },
     quoteMark: {
       color: '#007bff', // Blue color for the quotation marks
-      fontSize: 24, // Makes the quotes larger
+      fontSize: 28, // Makes the quotes larger
       marginHorizontal: 5, // Adds space around the quote marks
     },
   });
