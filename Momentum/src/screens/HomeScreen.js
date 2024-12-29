@@ -7,13 +7,13 @@ import { faPlus, faChartBar } from '@fortawesome/free-solid-svg-icons';
 const dailyQuote = "The only way to do great work is to love what you do.";
 
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
         {/*set goals*/}
         <TouchableOpacity
             style={styles.card}
-            onPress={() => navigation.navigate('SetGoals')} //placeHolder 
+            onPress={() => navigation.navigate('Set New Goal')} //placeHolder 
         >
         <FontAwesomeIcon icon={faPlus} size={30} color='#fff'/>
         <Text style={styles.cardText}>
