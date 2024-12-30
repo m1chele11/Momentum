@@ -9,6 +9,7 @@ import AccountScreen from './src/screens/AccountScreen';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faHouse, faHistory, faGear } from '@fortawesome/free-solid-svg-icons';
 import { createStackNavigator } from '@react-navigation/stack';
+import { ThemeProvider } from './src/context/themeContext';
 
 
 
@@ -39,36 +40,40 @@ function SettingsStack() {
 
 export default function App(){
   return(
-    <NavigationContainer>
+    <ThemeProvider>
+    
+      <NavigationContainer>
 
-      <Tab.Navigator
+        <Tab.Navigator
 
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ color, size }) => {
-            let icon;
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ color, size }) => {
+              let icon;
 
-            if (route.name === 'Home') {
-              icon = faHouse;
-            } else if (route.name === 'History') {
-              icon = faHistory;
-            } else if (route.name === 'Settings') {
-              icon = faGear;
-            }
+              if (route.name === 'Home') {
+                icon = faHouse;
+              } else if (route.name === 'History') {
+                icon = faHistory;
+              } else if (route.name === 'Settings') {
+                icon = faGear;
+              }
 
-            return <FontAwesomeIcon icon={icon} size={size} color={color} />;
-          },
-          tabBarActiveTintColor: '#007bff',
-          tabBarInactiveTintColor: 'gray',
-        })}
-      >
+              return <FontAwesomeIcon icon={icon} size={size} color={color} />;
+            },
+            tabBarActiveTintColor: '#007bff',
+            tabBarInactiveTintColor: 'gray',
+          })}
+        >
 
-        <Tab.Screen name="Home" component={HomeStack} options={{headerShown: false}}/>
-        <Tab.Screen name="History" component={HistoryScreen}/>
-        <Tab.Screen name="Settings" component={SettingsStack} options={{headerShown: false}}/>
+          <Tab.Screen name="Home" component={HomeStack} options={{headerShown: false}}/>
+          <Tab.Screen name="History" component={HistoryScreen}/>
+          <Tab.Screen name="Settings" component={SettingsStack} options={{headerShown: false}}/>
 
-  
-      </Tab.Navigator>
+    
+        </Tab.Navigator>
 
-    </NavigationContainer>
+      </NavigationContainer>
+
+    </ThemeProvider>
   )
 }

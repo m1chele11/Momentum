@@ -2,36 +2,42 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPlus, faChartBar } from '@fortawesome/free-solid-svg-icons';
-
+import { useTheme } from '../context/themeContext';
+import { darkTheme, lightTheme } from '../themes/themes';
 
 const dailyQuote = "A habit missed once is a mistake, a habit missed twice is the start of a new habit.";
 
 
 const HomeScreen = ({navigation}) => {
+
+  const { isDarkMode } = useTheme();
+  const theme = isDarkMode ? darkTheme : lightTheme;
+
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
         {/*set goals*/}
         <TouchableOpacity
-            style={styles.card}
+            style={[styles.card, { backgorundColor: theme.cardBackground }]}
             onPress={() => navigation.navigate('Set New Goal')} //placeHolder 
         >
         <FontAwesomeIcon icon={faPlus} size={30} color='#fff'/>
-        <Text style={styles.cardText}>Set New Goals</Text>
+        <Text style={[styles.cardText, { color: theme.cardTextColor }]}>Set New Goals</Text>
         </TouchableOpacity>
 
         {/*Tracking Progress*/}
         <TouchableOpacity
-            style={styles.card}
+            style={[styles.card, { color: theme.cardBackground }]}
             onPress={() => navigation.navigate('Progress Tracker')} //place holder
         >
             <FontAwesomeIcon icon={faChartBar} size={30} color='#fff'/>
-            <Text style={styles.cardText}>Track Progress</Text>
+            <Text style={[styles.cardText, { color: theme.cardTextColor }]}>Track Progress</Text>
 
         </TouchableOpacity>
 
         {/*Daily quote*/}
-        <View style={styles.quotecontainer}>
-            <Text style={styles.quoteText}>
+        <View style={[styles.quoteContainer, { backgroundColor: theme.quoteBackground }]}>
+          <Text style={[styles.quoteText, { color: theme.text }]}>
                 <Text style={styles.quoteMark}>"</Text>
                 {dailyQuote}
                 <Text style={styles.quoteMark}>"</Text>
@@ -85,9 +91,9 @@ const styles = StyleSheet.create({
       textAlign: 'center',
     },
     quoteMark: {
-      color: '#007bff', // Blue color for the quotation marks
-      fontSize: 28, // Makes the quotes larger
-      marginHorizontal: 5, // Adds space around the quote marks
+      color: '#007bff', 
+      fontSize: 28, 
+      marginHorizontal: 5, 
     },
   });
 
