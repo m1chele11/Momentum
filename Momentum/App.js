@@ -16,7 +16,7 @@ const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 function HomeStack() {
-  const { isDarkMode } = useTheme(); // Get current theme from ThemeContext
+  const { isDarkMode } = useTheme(); 
 
   const theme = isDarkMode ? darkTheme : lightTheme;
 
@@ -26,11 +26,11 @@ function HomeStack() {
         name="Home" 
         component={HomeScreen} 
         options={{
-          headerShown: true, // Keep header
+          headerShown: true,
           headerStyle: {
-            backgroundColor: theme.background, // Set header background color based on theme
+            backgroundColor: theme.background, 
           },
-          headerTintColor: theme.text, // Set text color for header (e.g., title, back button) based on theme
+          headerTintColor: theme.text, 
         }} 
       />
       <Stack.Screen 
@@ -60,7 +60,7 @@ function HomeStack() {
 }
 
 function SettingsStack() {
-  const { isDarkMode } = useTheme(); // Get current theme from ThemeContext
+  const { isDarkMode } = useTheme(); 
 
   const theme = isDarkMode ? darkTheme : lightTheme;
 
@@ -101,9 +101,8 @@ export default function App() {
   );
 }
 
-// This component will have access to the theme context
 function AppWithNavigation() {
-  const { isDarkMode } = useTheme(); // Get current theme from ThemeContext
+  const { isDarkMode } = useTheme(); 
 
   const theme = isDarkMode ? 'dark' : 'light';
 
@@ -121,17 +120,15 @@ function AppWithNavigation() {
               icon = faGear;
             }
 
-            // Adjust icon color based on theme
             return <FontAwesomeIcon icon={icon} size={size} color={color} />;
           },
-          // Tab bar styling based on the theme
-          tabBarActiveTintColor: theme === 'dark' ? '#5555FF' : '#007bff', // Active tab icon/text color
-          tabBarInactiveTintColor: theme === 'dark' ? '#aaa' : 'gray', // Inactive tab icon/text color
+          tabBarActiveTintColor: theme === 'dark' ? '#5555FF' : '#007bff', 
+          tabBarInactiveTintColor: theme === 'dark' ? '#aaa' : 'gray', 
           tabBarStyle: {
-            backgroundColor: theme === 'dark' ? '#333' : '#fff', // Tab bar background color
+            backgroundColor: theme === 'dark' ? '#333' : '#fff', 
           },
           tabBarLabelStyle: {
-            fontSize: 14, // Label font size
+            fontSize: 14, 
             fontWeight: 'bold',
           },
         })}

@@ -19,7 +19,7 @@ const HomeScreen = ({navigation}) => {
         {/*set goals*/}
         <TouchableOpacity
             style={[styles.card, { backgorundColor: theme.cardBackground }]}
-            onPress={() => navigation.navigate('Set New Goal')} //placeHolder 
+            onPress={() => navigation.navigate('Set New Goal')}
         >
         <FontAwesomeIcon icon={faPlus} size={30} color='#fff'/>
         <Text style={[styles.cardText, { color: theme.cardTextColor }]}>Set New Goals</Text>
@@ -28,7 +28,7 @@ const HomeScreen = ({navigation}) => {
         {/*Tracking Progress*/}
         <TouchableOpacity
             style={[styles.card, { color: theme.cardBackground }]}
-            onPress={() => navigation.navigate('Progress Tracker')} //place holder
+            onPress={() => navigation.navigate('Progress Tracker')} 
         >
             <FontAwesomeIcon icon={faChartBar} size={30} color='#fff'/>
             <Text style={[styles.cardText, { color: theme.cardTextColor }]}>Track Progress</Text>
