@@ -4,6 +4,7 @@ import HomeScreen from './src/screens/HomeScreen';
 import HistoryScreen from './src/screens/HistoryScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
 import SetGoalsScreen from './src/screens/SetGoalsScreen';
+import ProgressScreen from './src/screens/ProgressScreen';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faHouse, faHistory, faGear } from '@fortawesome/free-solid-svg-icons';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -21,6 +22,7 @@ function HomeStack() {
     <Stack.Navigator>
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Set New Goal" component={SetGoalsScreen} />
+      <Stack.Screen name="Progress Tracker" component={ProgressScreen}/>
     </Stack.Navigator>
   );
 }
@@ -45,7 +47,7 @@ export default function App(){
 
             return <FontAwesomeIcon icon={icon} size={size} color={color} />;
           },
-          tabBarActiveTintColor: 'blue',
+          tabBarActiveTintColor: '#007bff',
           tabBarInactiveTintColor: 'gray',
         })}
       >

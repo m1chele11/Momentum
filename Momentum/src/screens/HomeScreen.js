@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPlus, faChartBar } from '@fortawesome/free-solid-svg-icons';
 
 
-const dailyQuote = "The only way to do great work is to love what you do.";
+const dailyQuote = "A habit missed once is a mistake, a habit missed twice is the start of a new habit.";
 
 
 const HomeScreen = ({navigation}) => {
@@ -16,15 +16,13 @@ const HomeScreen = ({navigation}) => {
             onPress={() => navigation.navigate('Set New Goal')} //placeHolder 
         >
         <FontAwesomeIcon icon={faPlus} size={30} color='#fff'/>
-        <Text style={styles.cardText}>
-            Set New Goals
-        </Text>
+        <Text style={styles.cardText}>Set New Goals</Text>
         </TouchableOpacity>
 
-        {/*Tracking Bar*/}
+        {/*Tracking Progress*/}
         <TouchableOpacity
             style={styles.card}
-            onPress={() => navigation.navigate('TrackProgress')} //place holder
+            onPress={() => navigation.navigate('Progress Tracker')} //place holder
         >
             <FontAwesomeIcon icon={faChartBar} size={30} color='#fff'/>
             <Text style={styles.cardText}>Track Progress</Text>
