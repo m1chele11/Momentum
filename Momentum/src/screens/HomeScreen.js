@@ -38,11 +38,12 @@ const HomeScreen = ({navigation}) => {
         {/*Daily quote*/}
         <View style={[styles.quoteContainer, { backgroundColor: theme.quoteBackground }]}>
           <Text style={[styles.quoteText, { color: theme.text }]}>
-                <Text style={styles.quoteMark}>"</Text>
-                {dailyQuote}
-                <Text style={styles.quoteMark}>"</Text>
-            </Text>
+            <Text style={styles.quoteMark}>"</Text>
+              {dailyQuote}
+            <Text style={styles.quoteMark}>"</Text>
+          </Text>
         </View>
+
     </View>
   );
 };
