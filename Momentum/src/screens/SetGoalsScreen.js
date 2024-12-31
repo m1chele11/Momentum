@@ -3,10 +3,15 @@ import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
+
+
 const SetGoalsScreen = ({ navigation }) => {
   const [goalName, setGoalName] = useState('');
   const [deadline, setDeadline] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
+
 
   const saveGoal = async () => {
     if (!goalName.trim()) {
@@ -35,7 +40,7 @@ const SetGoalsScreen = ({ navigation }) => {
         value={goalName}
         onChangeText={setGoalName}
       />
-      <Text style={styles.label}>Deadline:</Text>
+      <Text style={styles.label}>Deadline Date:</Text>
       <Button title={deadline.toDateString()} onPress={() => setShowDatePicker(true)} />
       {showDatePicker && (
         <DateTimePicker
@@ -45,7 +50,22 @@ const SetGoalsScreen = ({ navigation }) => {
           onChange={(event, selectedDate) => {
             setShowDatePicker(false);
             if (selectedDate) {
-              setDeadline(selectedDate);
+              setDeadline((prev) => new Date(selectedDate.setHours(prev.getHours(), prev.getMinutes())));
+            }
+          }}
+        />
+      )}
+      <Text style={styles.label}>Deadline Time:</Text>
+      <Button title={deadline.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} onPress={() => setShowTimePicker(true)} />
+      {showTimePicker && (
+        <DateTimePicker
+          value={deadline}
+          mode="time"
+          display="default"
+          onChange={(event, selectedTime) => {
+            setShowTimePicker(false);
+            if (selectedTime) {
+              setDeadline((prev) => new Date(prev.setHours(selectedTime.getHours(), selectedTime.getMinutes())));
             }
           }}
         />

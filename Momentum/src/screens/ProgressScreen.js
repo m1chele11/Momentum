@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Button } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ProgressScreen = () => {
@@ -26,15 +26,33 @@ const ProgressScreen = () => {
     loadGoals();
   }, []);
 
-  const renderGoal = ({ item }) => (
-    <TouchableOpacity
-      style={[styles.goalItem, item.completed && styles.completedGoal]}
-      onPress={() => toggleCompletion(item.id)}
-    >
-      <Text style={styles.goalText}>{item.name}</Text>
-      <Text style={styles.goalDate}>{new Date(item.deadline).toDateString()}</Text>
-    </TouchableOpacity>
-  );
+  const renderGoal = ({ item }) => {
+    const deadline = new Date(item.deadline);
+    const isMissed = !item.completed && deadline < new Date();
+
+    return (
+      <TouchableOpacity
+        style={[
+          styles.goalItem,
+          item.completed && styles.completedGoal,
+          isMissed && styles.missedGoal,
+        ]}
+        onPress={() => {
+          if (isMissed) {
+            Alert.alert('Missed Deadline', 'This goal has passed its deadline.');
+          } else {
+            toggleCompletion(item.id);
+          }
+        }}
+      >
+        <Text style={styles.goalText}>{item.name}</Text>
+        <Text style={styles.goalDate}>
+          {deadline.toLocaleDateString()} {deadline.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+        </Text>
+        {isMissed && <Text style={styles.missedText}>Missed Deadline</Text>}
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -63,6 +81,9 @@ const styles = StyleSheet.create({
   completedGoal: {
     backgroundColor: '#4caf50',
   },
+  missedGoal: {
+    backgroundColor: '#ff5252',
+  },
   goalText: {
     color: '#fff',
     fontSize: 18,
@@ -71,6 +92,13 @@ const styles = StyleSheet.create({
     color: '#ddd',
     fontSize: 14,
   },
+  missedText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    marginTop: 5,
+    fontSize: 16,
+  },
 });
 
 export default ProgressScreen;
+
