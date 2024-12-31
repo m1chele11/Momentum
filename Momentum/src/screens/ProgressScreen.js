@@ -3,10 +3,11 @@ import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert } from 'react
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Swipeable } from 'react-native-gesture-handler';
 
 const ProgressScreen = () => {
   const [goals, setGoals] = useState([]);
-  const [confettiGoal, setConfettiGoal] = useState(null); // Track which goal has confetti
+  const [confettiGoal, setConfettiGoal] = useState(null); 
 
   const loadGoals = async () => {
     try {
@@ -24,13 +25,19 @@ const ProgressScreen = () => {
     setGoals(updatedGoals);
     await AsyncStorage.setItem('goals', JSON.stringify(updatedGoals));
 
-    // Trigger confetti for the goal
+
     const completedGoal = updatedGoals.find(goal => goal.id === id);
     if (completedGoal && !completedGoal.completed) {
-      setConfettiGoal(null); // Reset confetti if toggled back
+      setConfettiGoal(null);
     } else {
-      setConfettiGoal(id); // Set goal id for confetti
+      setConfettiGoal(id); 
     }
+  };
+
+  const deleteGoal = async (id) => {
+    const updatedGoals = goals.filter(goal => goal.id !== id);
+    setGoals(updatedGoals);
+    await AsyncStorage.setItem('goals', JSON.stringify(updatedGoals));
   };
 
   useEffect(() => {
@@ -41,7 +48,21 @@ const ProgressScreen = () => {
     const deadline = new Date(item.deadline);
     const isMissed = !item.completed && deadline < new Date();
 
+
+    const renderRightActions = (progress, dragX) => (
+      <TouchableOpacity
+        style={styles.deleteButton}
+        onPress={() => {
+          deleteGoal(item.id);
+          Alert.alert('Goal Deleted', 'Your goal has been deleted successfully!');
+        }}
+      >
+        <Icon name="trash" size={24} color="#fff" />
+      </TouchableOpacity>
+    );
+
     return (
+      <Swipeable renderRightActions={renderRightActions}>
         <TouchableOpacity
           style={[
             styles.goalItem,
@@ -76,20 +97,21 @@ const ProgressScreen = () => {
             </View>
           )}
         </TouchableOpacity>
-      );
-    };
-  
-    return (
-      <View style={styles.container}>
-        <FlatList
-          data={goals}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={renderGoal}
-          ListEmptyComponent={<Text>No goals found. Create one!</Text>}
-        />
-      </View>
+      </Swipeable>
     );
   };
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={goals}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={renderGoal}
+        ListEmptyComponent={<Text>No goals found. Create one!</Text>}
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -102,13 +124,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 10,
     backgroundColor: '#007bff',
-    position: 'relative', // To position badge and confetti
   },
   completedGoal: {
-    backgroundColor: '#4caf50', // Green background for completed goal
+    backgroundColor: '#4caf50',
   },
   missedGoal: {
-    backgroundColor: '#f44336', // Red background for missed goal
+    backgroundColor: '#f44336',
   },
   goalText: {
     color: '#fff',
@@ -122,15 +143,25 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 14,
     fontWeight: 'bold',
-    marginTop: 10, // Add some space between date and "Missed Deadline" text
+    marginTop: 10,
   },
   badgeContainer: {
     position: 'absolute',
     top: 10,
     right: 10,
   },
+  deleteButton: {
+    backgroundColor: '#e53946', 
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 70,
+    height: '90%',
+    borderRadius: 10,
+    marginRight: 10,
+  },
 });
 
 export default ProgressScreen;
+
 
 
